@@ -32,6 +32,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/app_db
       REDIS_URL: redis://redis:6379
+      ROCKET_DATABASES: '{postgres={url="postgres://postgres:postgres@postgres:5432/app_db"}}'
     ports:
       - 8000:8000
     volumes:
