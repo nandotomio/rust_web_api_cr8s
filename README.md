@@ -22,6 +22,12 @@ docker compose exec app diesel migration revert
 docker compose exec app cargo run
 ```
 
+## Run tests
+
+```bash
+docker compose exec app cargo test
+```
+
 ## Run Curl to test
 
 ```bash
