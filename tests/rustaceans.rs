@@ -69,6 +69,12 @@ fn test_view_rustaceans() {
     "created_at": rustacean["created_at"]
   }));
 
+  let response = client
+    .get(format!("{}/rustaceans/99999999999", common::APP_HOST))
+    .send()
+    .unwrap();    
+  assert_eq!(response.status(), StatusCode::NOT_FOUND);
+
   // Teardown
   common::delete_test_rustacean(&client, rustacean);
 }
