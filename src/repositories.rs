@@ -119,4 +119,29 @@ impl UserRepository {
         diesel::delete(users::table.find(id)).execute(c).await
     }
 }
+
+pub struct RoleRepository;
+
+impl RoleRepository {
+    pub async fn find_by_ids(c: &mut AsyncPgConnection, ids: Vec<i32>) -> QueryResult<Vec<Role>> {
+        roles::table.filter(roles::id.eq_any(ids)).load(c).await
+    }
+
+    pub async fn find_by_code(c: &mut AsyncPgConnection, code: String) -> QueryResult<Role> {
+        roles::table.filter(roles::code.eq(code)).first(c).await
+    }
+
+    pub async fn find_by_user(c: &mut AsyncPgConnection, user: &User) -> QueryResult<Vec<Role>> {
+        let user_roles = UserRole::belonging_to(&user).get_results::<UserRole>(c).await?;
+        let role_ids: Vec<i32> = user_roles.iter().map(|ur: &UserRole| ur.role_id).collect();
+
+        Self::find_by_ids(c, role_ids).await
+    }
+
+    pub async fn create(c: &mut AsyncPgConnection, new_role: NewRole) -> QueryResult<Role> {
+        diesel::insert_into(roles::table)
+            .values(new_role)
+            .get_result(c)
+            .await
+    }
 }
