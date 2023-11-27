@@ -23,3 +23,12 @@ pub async fn create_users(username: String, password: String, role_codes: Vec<St
   let roles = RoleRepository::find_by_user(&mut c, &user).await.unwrap();
   println!("Roles assigned: {:?}", roles);
 }
+
+pub async fn list_users() {
+  let mut c = load_db_connection().await;
+
+  let users = UserRepository::find_with_roles(&mut c).await.unwrap();
+  for user in users {
+    println!("{:?}", user);
+  }
+}
