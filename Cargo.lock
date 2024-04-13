@@ -364,6 +364,7 @@ dependencies = [
  "clap",
  "diesel",
  "diesel-async",
+ "rand",
  "reqwest",
  "rocket",
  "rocket_db_pools",
