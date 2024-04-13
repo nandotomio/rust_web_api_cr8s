@@ -18,6 +18,7 @@ async fn main() {
           cr8s::rocket_routes::rustaceans::update_rustacean,
           cr8s::rocket_routes::rustaceans::delete_rustacean,
         ])
+        .attach(cr8s::rocket_routes::CacheConn::init())
         .attach(cr8s::rocket_routes::DbConn::init())
         .launch()
         .await;
