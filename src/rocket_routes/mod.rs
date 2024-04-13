@@ -3,6 +3,7 @@ use rocket::http::Status;
 use rocket::response::status::Custom;
 use rocket::serde::json::{json, Value};
 
+pub mod authorization;
 pub mod crates;
 pub mod rustaceans;
 
